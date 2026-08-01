@@ -1,0 +1,225 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — cricket-inflected editorial portfolio.
+ * Palette: ivory, charcoal, pitch-green, one accent (India blue),
+ * terracotta hairlines, matte ball-red reserved for cursor + bat seam.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-pitch: var(--pitch);
+  --color-pitch-foreground: var(--pitch-foreground);
+  --color-rule: var(--rule);
+  --color-ball: var(--ball);
+  --color-ivory: var(--ivory);
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-meta);
+  --ease-shot: var(--ease-shot);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  --font-display: "Fraunces", "Instrument Serif", Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-meta: "IBM Plex Mono", ui-monospace, monospace;
+  --ease-shot: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --ivory: oklch(0.968 0.014 85.5); /* #FAF6EE */
+  --background: oklch(0.968 0.014 85.5);
+  --foreground: oklch(0.213 0.006 67.5); /* #171614 */
+  --card: oklch(0.982 0.008 85);
+  --card-foreground: oklch(0.213 0.006 67.5);
+  --popover: oklch(0.982 0.008 85);
+  --popover-foreground: oklch(0.213 0.006 67.5);
+
+  --primary: oklch(0.353 0.055 250.5); /* #1B3A5C India blue */
+  --primary-foreground: oklch(0.968 0.014 85.5);
+  --accent: oklch(0.353 0.055 250.5);
+  --accent-foreground: oklch(0.968 0.014 85.5);
+
+  --secondary: oklch(0.93 0.014 85);
+  --secondary-foreground: oklch(0.213 0.006 67.5);
+  --muted: oklch(0.93 0.014 85);
+  --muted-foreground: oklch(0.505 0.012 70);
+
+  --pitch: oklch(0.283 0.038 155); /* #1D2E22 */
+  --pitch-foreground: oklch(0.955 0.014 85.5);
+
+  --rule: oklch(0.56 0.075 42); /* muted terracotta */
+  --ball: oklch(0.43 0.128 27.5); /* #8C2B22 matte ball red */
+
+  --destructive: oklch(0.43 0.128 27.5);
+  --destructive-foreground: oklch(0.968 0.014 85.5);
+  --border: oklch(0.88 0.016 80);
+  --input: oklch(0.88 0.016 80);
+  --ring: oklch(0.353 0.055 250.5);
+}
+
+.dark {
+  --background: oklch(0.283 0.038 155);
+  --foreground: oklch(0.955 0.014 85.5);
+  --card: oklch(0.31 0.036 155);
+  --card-foreground: oklch(0.955 0.014 85.5);
+  --popover: oklch(0.31 0.036 155);
+  --popover-foreground: oklch(0.955 0.014 85.5);
+  --primary: oklch(0.72 0.055 250.5);
+  --primary-foreground: oklch(0.213 0.006 67.5);
+  --accent: oklch(0.72 0.055 250.5);
+  --accent-foreground: oklch(0.213 0.006 67.5);
+  --secondary: oklch(0.34 0.034 155);
+  --secondary-foreground: oklch(0.955 0.014 85.5);
+  --muted: oklch(0.34 0.034 155);
+  --muted-foreground: oklch(0.75 0.02 90);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.055 250.5);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01";
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  /* Scorebook numerals — every figure aligns like runs and overs. */
+  .num,
+  time,
+  .font-mono {
+    font-family: var(--font-meta);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+}
+
+/* The one cursor treatment: hide the system cursor for fine pointers only. */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-ball-active,
+  .cursor-ball-active * {
+    cursor: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ball-active,
+  .cursor-ball-active * {
+    cursor: auto !important;
+  }
+}
+
+/* Hairline scorebook rule — the only recurring graphic device. */
+@utility rule-line {
+  border: 0;
+  height: 1px;
+  width: 100%;
+  background-color: color-mix(in oklab, var(--rule) 55%, transparent);
+}
+
+/* Hide horizontal scrollbars on overflowing tab strips (Aceternity Tabs). */
+@utility no-visible-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility link-underline {
+  color: var(--primary);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 260ms var(--ease-shot);
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Near-invisible woven flannel grain — hero only. */
+@utility linen {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.9) 0px,
+        rgba(0, 0, 0, 0.9) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.9) 0px,
+        rgba(0, 0, 0, 0.9) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+  }
+}
+
+/* Floodlit night-match photo treatment. */
+@utility floodlit {
+  filter: contrast(1.14) saturate(0.72) brightness(0.98);
+}

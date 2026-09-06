@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
 });
 
 const selected = [
-  projectCategories[0]!.projects[0]!,
+  projectCategories[0]!.projects[2]!,
   projectCategories[0]!.projects[1]!,
   projectCategories[1]!.projects[0]!,
 ];

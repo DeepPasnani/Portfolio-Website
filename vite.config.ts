@@ -17,4 +17,5 @@ export default defineConfig({
     // Pin a stable compatibility date so local preview and deploys work.
     compatibilityDate: "2024-09-23",
   },
-} as any);
+  // The preset's types don't model the `tanstackStart`/`nitro` keys documented above.
+} as any); // eslint-disable-line @typescript-eslint/no-explicit-any

@@ -1,6 +1,5 @@
 import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
 
 interface TimelineEntry {
   title: string;

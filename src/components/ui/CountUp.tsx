@@ -71,13 +71,16 @@ export function CountUp({
     [maxDecimals, separator],
   );
 
-  const pad = (value: string) => (padTo > 0 ? value.padStart(padTo, "0") : value);
+  const pad = useCallback(
+    (value: string) => (padTo > 0 ? value.padStart(padTo, "0") : value),
+    [padTo],
+  );
 
   useEffect(() => {
     if (ref.current) {
       ref.current.textContent = pad(formatValue(direction === "down" ? to : from));
     }
-  }, [from, to, direction, formatValue, padTo]);
+  }, [from, to, direction, formatValue, pad]);
 
   useEffect(() => {
     if (isInView && startWhen) {
@@ -114,7 +117,7 @@ export function CountUp({
     });
 
     return () => unsubscribe();
-  }, [springValue, formatValue, padTo]);
+  }, [springValue, formatValue, pad]);
 
   return <span className={className} ref={ref} />;
 }

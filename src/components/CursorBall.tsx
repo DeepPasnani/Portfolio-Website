@@ -39,12 +39,15 @@ export function CursorBall() {
     let mx = -100;
     let my = -100;
     let visible = false;
+    let hovering = false;
     const LIFE = 220; // ms tail life
+    const HOVER_SELECTOR = 'a, button, input, textarea, select, [role="button"], [tabindex]:not([tabindex="-1"])';
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
       visible = true;
+      hovering = e.target instanceof Element && e.target.closest(HOVER_SELECTOR) !== null;
       points.push({ x: mx, y: my, t: performance.now() });
     };
     const onLeave = () => {
@@ -94,6 +97,16 @@ export function CursorBall() {
           ctx.fillStyle = `rgba(140, 43, 34, ${(0.26 - idx * 0.07) * life})`;
           ctx.fill();
         });
+
+        // Hover ring — the one affordance telling you something's clickable
+        // now that the system cursor (and its pointer icon) is hidden.
+        if (hovering) {
+          ctx.beginPath();
+          ctx.arc(mx, my, 11, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(140, 43, 34, 0.55)";
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
 
         // The ball itself, with a faint seam line.
         ctx.beginPath();

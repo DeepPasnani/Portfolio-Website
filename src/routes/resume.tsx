@@ -46,7 +46,24 @@ function Resume() {
         </a>
       </div>
       <hr className="rule-line mt-6" />
-      <div className="mt-8 border border-[color-mix(in_oklab,var(--rule)_35%,transparent)] bg-card p-1 sm:p-2">
+
+      {/* Mobile Safari doesn't render PDFs inside an iframe, so it's swapped for a
+          direct-open card below md; desktop keeps the inline preview. */}
+      <div className="mt-8 flex flex-col items-center gap-4 border border-[color-mix(in_oklab,var(--rule)_35%,transparent)] bg-card p-8 text-center md:hidden">
+        <p className="max-w-xs text-sm leading-relaxed text-foreground/70">
+          Inline preview isn't supported on this device. Open the résumé directly instead.
+        </p>
+        <a
+          href={resumeUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center bg-primary px-6 py-3 text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-90"
+        >
+          Open Resume
+        </a>
+      </div>
+
+      <div className="mt-8 hidden border border-[color-mix(in_oklab,var(--rule)_35%,transparent)] bg-card p-1 sm:p-2 md:block">
         <iframe
           src={resumeUrl}
           title={`Resume — ${person.name}`}

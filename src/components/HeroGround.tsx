@@ -45,6 +45,7 @@ export function HeroGround({
     if (!ctx) return;
     const host = wrap.parentElement ?? wrap;
     const FINE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const parallaxEl = parallaxRef.current;
 
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0;
@@ -537,8 +538,7 @@ export function HeroGround({
       host.removeEventListener("pointermove", onMove);
       host.removeEventListener("pointerdown", onDown);
       host.removeEventListener("pointerleave", onLeave);
-      const pl = parallaxRef.current;
-      if (pl) pl.style.transform = "";
+      if (parallaxEl) parallaxEl.style.transform = "";
     };
   }, [reduced]);
 
@@ -596,6 +596,9 @@ export function HeroGround({
             <clipPath id="fieldClip">
               <path d={outfield} />
             </clipPath>
+            <clipPath id="podClip">
+              <ellipse cx="600" cy="246" rx="96" ry="23" />
+            </clipPath>
           </defs>
 
           <rect width={VIEW_W} height={VIEW_H} fill="url(#dusk)" />
@@ -637,31 +640,72 @@ export function HeroGround({
             opacity="0.7"
           />
 
-          <g fill="#FAF6EE" fillOpacity="0.45">
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <path
-                key={i}
-                d={`M${974 + i * 22} ${344 + i * 28} q13 -17 26 0 z`}
-                transform={`rotate(${-26 + i * 9} ${987 + i * 22} ${344 + i * 28})`}
-              />
-            ))}
-          </g>
-
-          <g>
-            <rect x="536" y="244" width="128" height="26" rx="13" fill="#FAF6EE" fillOpacity="0.7" />
-            <rect x="556" y="250" width="88" height="9" rx="4" fill="#2A3E58" fillOpacity="0.55" />
-          </g>
-
-          <g>
-            <path d="M492 626 h216 l-22 40 h-172 z" fill="#8C2B22" fillOpacity="0.55" />
-            <path d="M514 626 h172 l-12 22 h-148 z" fill="#171614" fillOpacity="0.3" />
-            <line x1="600" y1="626" x2="600" y2="666" stroke="#FAF6EE" strokeOpacity="0.2" />
-          </g>
-
           <path d={outfield} fill="url(#turf)" />
 
           <g clipPath="url(#fieldClip)">
             <rect width={VIEW_W} height={VIEW_H} fill="url(#mow)" opacity="0.45" />
+          </g>
+
+          {/* Mound Stand — the tented scallop roofline on the ground's east side. */}
+          <g>
+            <path
+              d="M900 320 C 940 300 1080 300 1132 344"
+              fill="none"
+              stroke="#FAF6EE"
+              strokeOpacity="0.3"
+              strokeWidth="3"
+            />
+            <g fill="#FAF6EE" fillOpacity="0.5">
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+                <path
+                  key={i}
+                  d={`M${900 + i * 30} ${316 - i * 2} q15 -18 30 0 z`}
+                  transform={`rotate(${-30 + i * 7.5} ${915 + i * 30} ${316 - i * 2})`}
+                />
+              ))}
+            </g>
+            <path
+              d="M900 320 C 940 300 1080 300 1132 344"
+              fill="none"
+              stroke="#8C2B22"
+              strokeOpacity="0.4"
+              strokeWidth="1.5"
+              transform="translate(0, 8)"
+            />
+          </g>
+
+          {/* Media Centre — the elevated white pod at the Nursery End, opposite the Pavilion. */}
+          <g>
+            <line x1="600" y1="224" x2="600" y2="210" stroke="#FAF6EE" strokeOpacity="0.3" />
+            <ellipse cx="600" cy="246" rx="96" ry="23" fill="#FAF6EE" fillOpacity="0.85" />
+            <g clipPath="url(#podClip)">
+              <rect x="490" y="251" width="220" height="20" fill="#1B3A5C" fillOpacity="0.7" />
+              <g stroke="#FAF6EE" strokeOpacity="0.3" strokeWidth="1">
+                {[540, 570, 600, 630, 660].map((x) => (
+                  <line key={x} x1={x} y1="251" x2={x} y2="271" />
+                ))}
+              </g>
+            </g>
+            <polygon points="558,262 574,262 568,300 550,300" fill="#FAF6EE" fillOpacity="0.4" />
+            <polygon points="626,262 642,262 650,300 634,300" fill="#FAF6EE" fillOpacity="0.4" />
+          </g>
+
+          {/* The Pavilion — Lord's Victorian red-brick clubhouse, at the ground's south end. */}
+          <g>
+            <polygon points="548,592 528,604 568,604" fill="#9C5A42" fillOpacity="0.55" />
+            <polygon points="652,592 632,604 672,604" fill="#9C5A42" fillOpacity="0.55" />
+            <polygon points="600,578 566,604 634,604" fill="#9C5A42" fillOpacity="0.62" />
+            <rect x="522" y="602" width="156" height="60" fill="#9C5A42" fillOpacity="0.55" />
+            <rect x="522" y="616" width="156" height="4" fill="#FAF6EE" fillOpacity="0.4" />
+            <rect x="522" y="640" width="156" height="4" fill="#FAF6EE" fillOpacity="0.4" />
+            <g fill="#171614" fillOpacity="0.3">
+              {[534, 552, 570, 588, 612, 630, 648, 666].map((x) => (
+                <rect key={x} x={x} y="622" width="3" height="14" />
+              ))}
+            </g>
+            <line x1="600" y1="578" x2="600" y2="558" stroke="#FAF6EE" strokeOpacity="0.32" />
+            <rect x="601" y="558" width="10" height="6" fill="#8C2B22" fillOpacity="0.6" />
+            <circle cx="600" cy="578" r="2.6" fill="#FAF6EE" fillOpacity="0.45" />
           </g>
 
           <path
@@ -683,14 +727,24 @@ export function HeroGround({
           />
 
           <g transform="rotate(-5 600 452)">
-            <rect x="546" y="392" width="108" height="120" rx="2" fill="#B08363" fillOpacity="0.4" />
-            <rect x="586" y="392" width="28" height="120" rx="1" fill="#D8C39F" fillOpacity="0.85" />
-            <rect x="560" y="392" width="16" height="120" rx="1" fill="#D8C39F" fillOpacity="0.5" />
-            <rect x="626" y="392" width="16" height="120" rx="1" fill="#D8C39F" fillOpacity="0.5" />
-            <line x1="589" y1="402" x2="611" y2="402" stroke="#171614" strokeOpacity="0.4" />
-            <line x1="589" y1="502" x2="611" y2="502" stroke="#171614" strokeOpacity="0.4" />
-            <rect x="582" y="404" width="36" height="8" fill="#FAF6EE" fillOpacity="0.35" rx="2" />
-            <rect x="582" y="490" width="36" height="8" fill="#FAF6EE" fillOpacity="0.35" rx="2" />
+            <rect x="546" y="392" width="108" height="120" rx="2" fill="#C9B385" fillOpacity="0.45" />
+            <rect x="586" y="392" width="28" height="120" rx="1" fill="#E6D8AC" fillOpacity="0.85" />
+            <rect x="560" y="392" width="16" height="120" rx="1" fill="#E6D8AC" fillOpacity="0.5" />
+            <rect x="626" y="392" width="16" height="120" rx="1" fill="#E6D8AC" fillOpacity="0.5" />
+            {/* Popping creases */}
+            <line x1="560" y1="402" x2="640" y2="402" stroke="#FAF6EE" strokeOpacity="0.55" strokeWidth="1.2" />
+            <line x1="560" y1="502" x2="640" y2="502" stroke="#FAF6EE" strokeOpacity="0.55" strokeWidth="1.2" />
+            {/* Stumps at each end, three to a set with bails on top */}
+            <g fill="#FAF6EE" fillOpacity="0.75">
+              {[592, 599, 606].map((x) => (
+                <rect key={`top-${x}`} x={x} y="378" width="2" height="14" />
+              ))}
+              {[592, 599, 606].map((x) => (
+                <rect key={`bot-${x}`} x={x} y="512" width="2" height="14" />
+              ))}
+            </g>
+            <line x1="590" y1="378" x2="609" y2="378" stroke="#FAF6EE" strokeOpacity="0.5" />
+            <line x1="590" y1="526" x2="609" y2="526" stroke="#FAF6EE" strokeOpacity="0.5" />
           </g>
 
           <g fill="#FAF6EE" fillOpacity="0.38">
